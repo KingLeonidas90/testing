@@ -3,35 +3,24 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 import AttendeesScreen from './screens/AttendeesScreen';
 import CreateNotificationScreen from './screens/CreateNotificationScreen';
-import GroupOverviewScreen from './screens/GroupOverviewScreen';
+import CreateGroupScreen from './screens/CreateGroupScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
 import OverviewScreen from './screens/OverviewScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
 import AuthScreen from './screens/AuthScreen';
 // use height, weight and fontSize of device screen
 // import { width, height, totalSize } from 'react-native-dimension';
 
 export default class App extends React.Component {
   render() {
-
-// const MainNavigator = TabNavigator({
-//   auth: { screen: AuthScreen },
-//   main: {
-//     screen: TabNavigator({
-//       overview: { screen: OverviewScreen }
-//     })
-//   }
-//
-// });
-
-
 const MainNavigator = TabNavigator({
   // welcome ist unser key, er stellt den router für den welcomeScreen
-  welcome: { screen: OverviewScreen },
+  welcome: { screen: WelcomeScreen },
   auth: { screen: AuthScreen },
   main: {
     screen: TabNavigator({
-      map: { screen: CreateNotificationScreen },
-      deck: { screen: GroupOverviewScreen },
+      overview: { screen: OverviewScreen },
+      attendees: { screen: AttendeesScreen },
       review: {
         screen: StackNavigator({
           review: { screen: AttendeesScreen },
@@ -40,7 +29,7 @@ const MainNavigator = TabNavigator({
       }
 
   }, {
-    tabBarPosition: 'bottom',
+    // tabBarPosition: 'bottom',
     tabBarOptions: {
       labelStyle: { fontSize: 12 },
       showIcon: true,
@@ -54,11 +43,11 @@ const MainNavigator = TabNavigator({
   //   tabBarVisible: false
   // },
   // durch false kann man nicht mehr durchs swipen durch die jeweiligen Tabs switchen
-  swipeEnabled: false,
+  swipeEnabled: true,
   // Each screen will not mount/load until user clicks on them
 lazy: true,
 animationEnabled: false,
-tabBarPosition: 'bottom',
+// tabBarPosition: 'bottom',
 // // tabBarOptions: {
 // //   showIcon: true,
 // //         iconStyle: {
