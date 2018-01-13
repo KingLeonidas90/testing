@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
+import { StyleSheet, Text, View, StatusBar, Platform } from 'react-native';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import AttendeesScreen from './screens/AttendeesScreen';
 import CreateNotificationScreen from './screens/CreateNotificationScreen';
 import CreateGroupScreen from './screens/CreateGroupScreen';
@@ -13,60 +13,80 @@ import AuthScreen from './screens/AuthScreen';
 
 export default class App extends React.Component {
   render() {
+    const MyStatusBar = ({backgroundColor, ...props}) => (
+  <View style={[styles.statusBar, { backgroundColor }]}>
+    <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+  </View>
+);
+
 const MainNavigator = TabNavigator({
-  // welcome ist unser key, er stellt den router für den welcomeScreen
-  welcome: { screen: WelcomeScreen },
-  auth: { screen: AuthScreen },
-  main: {
-    screen: TabNavigator({
-      overview: { screen: OverviewScreen },
-      attendees: { screen: AttendeesScreen },
-      review: {
-        screen: StackNavigator({
-          review: { screen: AttendeesScreen },
-          settings: { screen: NotificationsScreen }
-        })
-      }
 
-  }, {
-    // tabBarPosition: 'bottom',
-    tabBarOptions: {
-      labelStyle: { fontSize: 12 },
-      showIcon: true,
-      iconStyle: { width: 30 }
+welcome: { screen: WelcomeScreen },
+auth: { screen: AuthScreen },
+main: {
+  screen: TabNavigator({
+    overview: {
+      screen: StackNavigator({
+      overView: { screen: OverviewScreen },
+        createGroup: { screen: CreateGroupScreen },
+      })
 
+    },
+    attendees: { screen: AttendeesScreen },
+
+    notification: {
+      screen: StackNavigator({
+        notification: { screen: NotificationsScreen },
+        createNotification: { screen: CreateNotificationScreen }
+      })
     }
-  })
-  }
+
 }, {
-  // navigationOptions: {
-  //   tabBarVisible: false
-  // },
-  // durch false kann man nicht mehr durchs swipen durch die jeweiligen Tabs switchen
-  swipeEnabled: true,
-  // Each screen will not mount/load until user clicks on them
+  tabBarOptions: {
+    showLabel: false,
+    labelStyle: { fontSize: 12 },
+    showIcon: true,
+    iconStyle: { width: 30 },
+    style: {
+      backgroundColor: '#ff5055',
+      // marginTop: 24
+    }
+
+  }
+})
+}
+}, {
+// navigationOptions: {
+//   tabBarVisible: false
+// },
+// durch false kann man nicht mehr durchs swipen durch die jeweiligen Tabs switchen
+swipeEnabled: false,
+// Each screen will not mount/load until user clicks on them
 lazy: true,
+// Muss auf false bleiben für die android version, da die bar ansonsten nicht mehr
+// richtig funktioniert
 animationEnabled: false,
-// tabBarPosition: 'bottom',
-// // tabBarOptions: {
-// //   showIcon: true,
-// //         iconStyle: {
-// //           width: 30,
-// //           height: 30 }
-// }
+tabBarPosition: 'bottom',
 });
 
     return (
-      <MainNavigator />
+      <View style={styles.container}>
+          <MyStatusBar backgroundColor="red" barStyle="light-content" />
+          <MainNavigator />
+        </View>
     );
   }
 }
 
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
   },
+  statusBar: {
+    height: STATUSBAR_HEIGHT,
+  }
 });
 
 // const styles = StyleSheet.create({
