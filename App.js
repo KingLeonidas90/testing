@@ -8,12 +8,13 @@ import NotificationsScreen from './screens/NotificationsScreen';
 import OverviewScreen from './screens/OverviewScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import AuthScreen from './screens/AuthScreen';
-// use height, weight and fontSize of device screen
-// import { width, height, totalSize } from 'react-native-dimension';
+import TestScreen from './screens/TestScreen';
+
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
 export default class App extends React.Component {
   render() {
-    const MyStatusBar = ({backgroundColor, ...props}) => (
+    const MyStatusBar = ({ backgroundColor, ...props }) => (
   <View style={[styles.statusBar, { backgroundColor }]}>
     <StatusBar translucent backgroundColor={backgroundColor} {...props} />
   </View>
@@ -23,6 +24,7 @@ const MainNavigator = TabNavigator({
 
 welcome: { screen: WelcomeScreen },
 auth: { screen: AuthScreen },
+test: { screen: TestScreen },
 main: {
   screen: TabNavigator({
     overview: {
@@ -78,8 +80,6 @@ tabBarPosition: 'bottom',
   }
 }
 
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -88,18 +88,3 @@ const styles = StyleSheet.create({
     height: STATUSBAR_HEIGHT,
   }
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     marginTop: 20,
-//   },
-//   textWrapper: {
-//     height: height(100), // 70% of height device screen
-//     width: width(100), // 80% of width device screen
-//     backgroundColor: 'yellow',
-//   },
-//   myText: {
-//     fontSize: totalSize(2) // 2% of total screen size
-//   }
-// });
