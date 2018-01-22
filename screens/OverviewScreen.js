@@ -10,7 +10,17 @@ class OverviewScreen extends Component {
          return <Icon name="star" size={20} color={tintColor} />;
         },
         // Sorgt dafür, dass die StackBar ausgeblendet wird
-   header: null
+        headerRight: (
+          <View style={{ marginRight: 15 }}>
+            <Icon
+              name='check'
+              onPress={() => {}}
+              color='#ff5555'
+            />
+          </View>
+        ),
+        headerTitle: 'Gruppen Übersicht'
+
        };
    }
   render() {

@@ -20,56 +20,120 @@ export default class App extends React.Component {
   </View>
 );
 
-const MainNavigator = TabNavigator({
+const MainNavigator = StackNavigator({
 
-welcome: { screen: WelcomeScreen },
-auth: { screen: AuthScreen },
-test: { screen: TestScreen },
-main: {
+myTab: {
   screen: TabNavigator({
-    overview: {
-      screen: StackNavigator({
-      overView: { screen: OverviewScreen },
-        createGroup: { screen: CreateGroupScreen },
-      })
+    welcome: { screen: WelcomeScreen },
+    auth: { screen: AuthScreen },
+    test: { screen: TestScreen },
+    main: {
+      screen: TabNavigator({
+        overview: {
+          screen: StackNavigator({
+          overView: { screen: OverviewScreen },
+            createGroup: { screen: CreateGroupScreen },
+          },
+          {
+     headerMode: 'none'
+  })
 
-    },
-    attendees: { screen: AttendeesScreen },
+        },
+        attendees: { screen: AttendeesScreen },
 
-    notification: {
-      screen: StackNavigator({
-        notification: { screen: NotificationsScreen },
-        createNotification: { screen: CreateNotificationScreen }
-      })
+        notification: {
+          screen: StackNavigator({
+            notification: { screen: NotificationsScreen },
+            createNotification: { screen: CreateNotificationScreen }
+          },
+          {
+     headerMode: 'none'
+  })
+        }
+
+    }, {
+      tabBarOptions: {
+        showLabel: false,
+        labelStyle: { fontSize: 12 },
+        showIcon: true,
+        iconStyle: { width: 30 },
+        style: {
+          backgroundColor: '#ff5055',
+          // marginTop: 24
+        }
+
+      }
+    })
     }
+    }, {
+    // navigationOptions: {
+    //   tabBarVisible: false
+    // },
+    // durch false kann man nicht mehr durchs swipen durch die jeweiligen Tabs switchen
+    swipeEnabled: false,
+    // Each screen will not mount/load until user clicks on them
+    lazy: true,
+    // Muss auf false bleiben für die android version, da die bar ansonsten nicht mehr
+    // richtig funktioniert
+    animationEnabled: false,
+    tabBarPosition: 'bottom',
+  }),
 
-}, {
-  tabBarOptions: {
-    showLabel: false,
-    labelStyle: { fontSize: 12 },
-    showIcon: true,
-    iconStyle: { width: 30 },
-    style: {
-      backgroundColor: '#ff5055',
-      // marginTop: 24
-    }
+},
 
-  }
-})
-}
-}, {
-// navigationOptions: {
-//   tabBarVisible: false
-// },
-// durch false kann man nicht mehr durchs swipen durch die jeweiligen Tabs switchen
-swipeEnabled: false,
-// Each screen will not mount/load until user clicks on them
-lazy: true,
-// Muss auf false bleiben für die android version, da die bar ansonsten nicht mehr
-// richtig funktioniert
-animationEnabled: false,
-tabBarPosition: 'bottom',
-});
+
+},
+);
+
+
+// welcome: { screen: WelcomeScreen },
+// auth: { screen: AuthScreen },
+// test: { screen: TestScreen },
+// main: {
+//   screen: TabNavigator({
+//     overview: {
+//       screen: StackNavigator({
+//       overView: { screen: OverviewScreen },
+//         createGroup: { screen: CreateGroupScreen },
+//       })
+//
+//     },
+//     attendees: { screen: AttendeesScreen },
+//
+//     notification: {
+//       screen: StackNavigator({
+//         notification: { screen: NotificationsScreen },
+//         createNotification: { screen: CreateNotificationScreen }
+//       })
+//     }
+//
+// }, {
+//   tabBarOptions: {
+//     showLabel: false,
+//     labelStyle: { fontSize: 12 },
+//     showIcon: true,
+//     iconStyle: { width: 30 },
+//     style: {
+//       backgroundColor: '#ff5055',
+//       // marginTop: 24
+//     }
+//
+//   }
+// })
+// }
+// }, {
+// // navigationOptions: {
+// //   tabBarVisible: false
+// // },
+// // durch false kann man nicht mehr durchs swipen durch die jeweiligen Tabs switchen
+// swipeEnabled: false,
+// // Each screen will not mount/load until user clicks on them
+// lazy: true,
+// // Muss auf false bleiben für die android version, da die bar ansonsten nicht mehr
+// // richtig funktioniert
+// animationEnabled: false,
+// tabBarPosition: 'bottom',
+// });
 
     return (
       <View style={styles.container}>

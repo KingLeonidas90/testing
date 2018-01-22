@@ -7,8 +7,8 @@ class NotificationsScreen extends Component {
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => {
       return <Icon name="access-time" size={20} color={tintColor} />;
-},
-    header: null
+}
+
   }
   render() {
     return (
